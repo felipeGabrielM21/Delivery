@@ -1,0 +1,137 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f8f8f8;
+    background-image: url('restaurante12.jpg'); /* Caminho da imagem de fundo temática */
+    background-size: cover; /* Ajusta a imagem para cobrir toda a tela */
+    background-position: center; /* Centraliza a imagem */
+    background-repeat: no-repeat; /* Evita a repetição */
+    background-attachment: fixed; /* Fixa a imagem no fundo enquanto rola a página */
+}
+
+h1 {
+    text-align: center;
+    color: #ffffff;
+}
+
+.container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8); /* Cor de fundo semitransparente para contraste */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.9); /* Fundo branco semitransparente para melhor contraste */
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.item-info {
+    flex: 1; /* Permite que a seção de informações ocupe o máximo de espaço disponível */
+}
+
+.item-name {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.item-description {
+    font-size: 14px;
+    color: #666;
+    margin: 20px 0; /* Espaçamento vertical entre descrição e controles */
+}
+
+.item-controls {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.item-controls button {
+    padding: 5px 10px;
+    background-color: #129c1e;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.item-controls button:disabled {
+    background-color: #ccc;
+}
+
+.item-controls input {
+    text-align: center;
+    width: 40px;
+    font-size: 18px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 0 5px; /* Margem para dar espaço entre os botões e o input */
+}
+
+.item-details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* Alinha a imagem e o preço à direita */
+    margin-left: 20px; /* Espaçamento entre o conteúdo e a imagem */
+}
+
+.item-details img {
+    width: 100px;  /* Tamanho fixo para as imagens */
+    height: 100px;
+    border-radius: 5px; /* Deixa as bordas das imagens mais arredondadas */
+}
+
+.item-price {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px; /* Espaçamento entre a imagem e o preço */
+}
+
+/* Área do total e botão */
+.total-button-container {
+    display: flex;
+    justify-content: space-between; /* Mantém o total à esquerda e o botão à direita */
+    align-items: center; /* Alinha o texto do total e o botão verticalmente */
+    margin-top: 20px;
+}
+
+#total {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.button-container {
+    text-align: right; /* Alinha o botão à direita */
+}
+
+#finalizar-pedido {
+    padding: 10px 20px;
+    background-color: #28a745; /* Cor verde agradável */
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-left: auto; /* Garante que o botão vá para a extrema direita */
+}
+
+#finalizar-pedido:hover {
+    background-color: #218838; /* Cor verde mais escura no hover */
+    transform: translateY(-3px); /* Efeito de elevação */
+}
+
+#finalizar-pedido:active {
+    background-color: #1e7e34;
+    transform: translateY(0);
+}

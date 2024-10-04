@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <link rel="stylesheet" href="pedido.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedido de Delivery</title>
+</head>
+<body>
+<h1>Efetuar Pedido</h1>
+<form id="pedido-form">
+    <div class="container">
+        <!-- Item 1: Feijoada -->
+        <div class="item">
+            <div class="item-info">
+                <span class="item-name">Feijoada</span>
+                <p class="item-description">(Tradicional prato brasileiro com arroz, feijão preto, carne de porco, couve e farofa.)</p>
+                <div class="item-controls">
+                    <button type="button" onclick="updateQuantity('feijoada', -1)">-</button>
+                    <input type="text" id="feijoada" value="0" readonly>
+                    <button type="button" onclick="updateQuantity('feijoada', 1)">+</button>
+                </div>
+            </div>
+            <div class="item-details">
+                <img src="feijoada.jpg" alt="Feijoada" />
+                <span class="item-price">R$ <span id="feijoada-price">30.00</span></span>
+            </div>
+        </div>
+
+        <!-- Item 2: Filé de Frango -->
+        <div class="item">
+            <div class="item-info">
+                <span class="item-name">Filé de Frango</span>
+                <p class="item-description">(Filé de frango grelhado servido com arroz, feijão e vegetais)</p>
+                <div class="item-controls">
+                    <button type="button" onclick="updateQuantity('frango', -1)">-</button>
+                    <input type="text" id="frango" value="0" readonly>
+                    <button type="button" onclick="updateQuantity('frango', 1)">+</button>
+                </div>
+            </div>
+            <div class="item-details">
+                <img src="file de frango.jpg" alt="Filé de Frango" />
+                <span class="item-price">R$ <span id="frango-price">23.00</span></span>
+            </div>
+        </div>
+
+        <!-- Item 3: Bife com Fritas -->
+        <div class="item">
+            <div class="item-info">
+                <span class="item-name">Bife com Fritas</span>
+                <p class="item-description">(Suculento bife grelhado acompanhado de batatas fritas crocantes)</p>
+                <div class="item-controls">
+                    <button type="button" onclick="updateQuantity('carne', -1)">-</button>
+                    <input type="text" id="carne" value="0" readonly>
+                    <button type="button" onclick="updateQuantity('carne', 1)">+</button>
+                </div>
+            </div>
+            <div class="item-details">
+                <img src="bife_com_fritas.jpg" alt="Bife com Fritas" />
+                <span class="item-price">R$ <span id="carne-price">22.00</span></span>
+            </div>
+        </div>
+
+        <!-- Item 4: Parmegiana de Frango -->
+        <div class="item">
+            <div class="item-info">
+                <span class="item-name">Parmegiana de Frango</span>
+                <p class="item-description">(Frango empanado coberto com molho de tomate e queijo, servido com arroz e batatas fritas)</p>
+                <div class="item-controls">
+                    <button type="button" onclick="updateQuantity('parmegiana', -1)">-</button>
+                    <input type="text" id="parmegiana" value="0" readonly>
+                    <button type="button" onclick="updateQuantity('parmegiana', 1)">+</button>
+                </div>
+            </div>
+            <div class="item-details">
+                <img src="parmegiana_frango.jpg" alt="Parmegiana de Frango" />
+                <span class="item-price">R$ <span id="parmegiana-price">28.00</span></span>
+            </div>
+        </div>
+
+        <!-- Total and Finalizar Pedido -->
+        <div class="total-button-container">
+            <div id="total">
+                <h2>Total: R$ <span id="total-price">0.00</span></h2>
+            </div>
+            <button type="submit" id="finalizar-pedido">Finalizar Pedido</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    function updateQuantity(item, change) {
+        const input = document.getElementById(item);
+        let currentValue = parseInt(input.value);
+        if (currentValue + change >= 0) {
+            input.value = currentValue + change;
+            updateTotal();
+        }
+    }
+
+    function updateTotal() {
+        const items = ['feijoada', 'frango', 'carne', 'parmegiana'];
+        let total = 0;
+
+        items.forEach(item => {
+            const quantity = parseInt(document.getElementById(item).value);
+            const price = parseFloat(document.getElementById(item + '-price').textContent);
+            total += quantity * price;
+        });
+
+        document.getElementById('total-price').textContent = total.toFixed(2);
+    }
+
+    document.getElementById('pedido-form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Evita que a página seja recarregada
+        const feijoada = parseInt(document.getElementById('feijoada').value) || 0;
+        const frango = parseInt(document.getElementById('frango').value) || 0;
+        const carne = parseInt(document.getElementById('carne').value) || 0;
+        const parmegiana = parseInt(document.getElementById('parmegiana').value) || 0;
+        const total = parseFloat(document.getElementById('total-price').textContent) || 0;
+
+        if (feijoada > 0 || frango > 0 || carne > 0 || parmegiana > 0) {
+            fetch("http://localhost:8080/pedido", {
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+                method: "POST",
+                body: JSON.stringify({
+                    feijoada: feijoada,
+                    frango: frango,
+                    carne: carne,
+                    parmegiana: parmegiana,
+                    total: total
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert("Pedido realizado com sucesso!");
+                console.log(data);
+            })
+            .catch(error => {
+                console.error("Erro ao enviar o pedido:", error);
+                alert("Erro ao efetuar o pedido.");
+            });
+        } else {
+            alert("Adicione ao menos um item ao pedido.");
+        }
+    });
+</script>
+</body>
+</html>
